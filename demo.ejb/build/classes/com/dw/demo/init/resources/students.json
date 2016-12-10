@@ -1,0 +1,129 @@
+[ {
+	"id" : "0b031e9b-6933-4a10-9ffc-c7fd2c604331",
+	"firstName" : "Aaron",
+	"lastName" : "Aaronson",
+	"gender" : "MALE",
+	"email" : "aaaronson@domain.net",
+	"studentNumber" : "823-934",
+	"registeredOn" : "2013-01-29T00:00:00+00:00"
+}, {
+	"id" : "9a61de44-097b-48b1-9b26-badbd8c5c2a5",
+	"firstName" : "Bonnie",
+	"lastName" : "Bucholtz",
+	"gender" : "FEMALE",
+	"email" : "bbucholtz@domain.net",
+	"studentNumber" : "871-415",
+	"registeredOn" : "2013-01-01T00:00:00+00:00"
+}, {
+	"id" : "6dbba263-bde9-4f17-9ddb-e48d94124b77",
+	"firstName" : "Carl",
+	"lastName" : "Carson",
+	"gender" : "MALE",
+	"email" : "ccarson@domain.net",
+	"studentNumber" : "424-022",
+	"registeredOn" : "2013-03-26T00:00:00+00:00"
+}, {
+	"id" : "9ff77c00-c9bb-4c9c-ada1-dbe61070ffd4",
+	"firstName" : "Donna",
+	"lastName" : "Donaldson",
+	"gender" : "FEMALE",
+	"email" : "ddonaldson@domain.net",
+	"studentNumber" : "713-666",
+	"registeredOn" : "2013-01-07T00:00:00+00:00"
+}, {
+	"id" : "f17c47d4-3518-466d-b280-76794fb09d6b",
+	"firstName" : "Eric",
+	"lastName" : "Eveleigh",
+	"gender" : "MALE",
+	"email" : "eeveleight@domain.net",
+	"studentNumber" : "626-732",
+	"registeredOn" : "2013-01-10T00:00:00+00:00"
+}, {
+	"id" : "be552830-aee1-4610-87c7-d1f5ddefcdbc",
+	"firstName" : "Fiona",
+	"lastName" : "Flaumel",
+	"gender" : "FEMALE",
+	"email" : "fflaumel@domain.net",
+	"studentNumber" : "190-072",
+	"registeredOn" : "2013-01-23T00:00:00+00:00"
+}, {
+	"id" : "0021192c-e4ea-413e-ba4a-218130b7f694",
+	"firstName" : "Greg",
+	"lastName" : "Gregory",
+	"gender" : "MALE",
+	"email" : "ggregory@domain.net",
+	"studentNumber" : "349-571",
+	"registeredOn" : "2013-01-25T00:00:00+00:00"
+}, {
+	"id" : "ec5c8b09-4966-4584-96ed-e74897d02064",
+	"firstName" : "Helen",
+	"lastName" : "Hunter",
+	"gender" : "FEMALE",
+	"email" : "hhunter@domain.net",
+	"studentNumber" : "207-422",
+	"registeredOn" : "2013-01-30T00:00:00+00:00"
+}, {
+	"id" : "79b1056c-346a-4bf5-aa27-6c09e17a9438",
+	"firstName" : "Isaac",
+	"lastName" : "Isaacson",
+	"gender" : "MALE",
+	"email" : "iisaacson@domain.net",
+	"studentNumber" : "284-080",
+	"registeredOn" : "2012-12-26T00:00:00+00:00"
+}, {
+	"id" : "85c84736-3038-4091-b0e8-92d71e1617ca",
+	"firstName" : "Jane",
+	"lastName" : "Jones",
+	"gender" : "FEMALE",
+	"email" : "jjones@domain.net",
+	"studentNumber" : "404-154",
+	"registeredOn" : "2013-02-05T00:00:00+00:00"
+}, {
+	"id" : "5af45c1c-b939-4947-ac8a-22f49e57effe",
+	"firstName" : "Karl",
+	"lastName" : "Killian",
+	"gender" : "MALE",
+	"email" : "kkillian@domain.net",
+	"studentNumber" : "360-974",
+	"registeredOn" : "2013-02-20T00:00:00+00:00"
+}, {
+	"id" : "60ec4bb4-0246-43c3-822a-69614692ee16",
+	"firstName" : "Lorna",
+	"lastName" : "Lumley",
+	"gender" : "FEMALE",
+	"email" : "llumley@domain.net",
+	"studentNumber" : "375-600",
+	"registeredOn" : "2013-02-28T00:00:00+00:00"
+}, {
+	"id" : "fd4df5c0-c8e3-4742-b7a9-81409d143fa1",
+	"firstName" : "Martin",
+	"lastName" : "Martin",
+	"gender" : "MALE",
+	"email" : "mmartin@domain.net",
+	"studentNumber" : "381-992",
+	"registeredOn" : "2013-03-19T00:00:00+00:00"
+}, {
+	"id" : "36b2bfd0-f860-4ca8-94a7-d7e19ea5681e",
+	"firstName" : "Nola",
+	"lastName" : "Noonan",
+	"gender" : "FEMALE",
+	"email" : "nnoonan@domain.net",
+	"studentNumber" : "146-283",
+	"registeredOn" : "2013-03-20T00:00:00+00:00"
+}, {
+	"id" : "a55de378-c022-4b1d-b954-e8d0480765b4",
+	"firstName" : "Oswald",
+	"lastName" : "Osborne",
+	"gender" : "MALE",
+	"email" : "oosborne@domain.net",
+	"studentNumber" : "170-198",
+	"registeredOn" : "2013-03-22T00:00:00+00:00"
+}, {
+	"id" : "864eb556-053a-42d7-a757-e24928fb19a3",
+	"firstName" : "Pamela",
+	"lastName" : "Peterson",
+	"gender" : "FEMALE",
+	"email" : "ppeterson@domain.net",
+	"studentNumber" : "826-660",
+	"registeredOn" : "2013-01-18T00:00:00+00:00"
+} ]

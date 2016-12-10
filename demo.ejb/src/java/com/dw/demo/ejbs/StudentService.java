@@ -2,6 +2,7 @@ package com.dw.demo.ejbs;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 import java.util.logging.Logger;
 
@@ -44,8 +45,10 @@ public class StudentService implements IStudentService {
 		final String methodName = "create";
 		logger.entering(className, methodName);
 		try {
+			Random r = new Random();
 			newStudent.setId(UUID.randomUUID().toString());
 			newStudent.setRegisteredOn(Calendar.getInstance());
+			newStudent.setStudentNumber(String.format("%03d-%03d", 1 + r.nextInt(999), 1 + r.nextInt(999)));
 			em.persist(newStudent);
 			return newStudent;
 		} finally {

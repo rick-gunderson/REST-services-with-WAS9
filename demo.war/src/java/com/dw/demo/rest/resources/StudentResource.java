@@ -1,11 +1,15 @@
 package com.dw.demo.rest.resources;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.validation.ConstraintViolationException;
+import javax.validation.Valid;
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -16,6 +20,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.GenericEntity;
+import javax.ws.rs.core.Link;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -23,6 +28,8 @@ import javax.ws.rs.core.UriInfo;
 
 import com.dw.demo.ejbs.IStudentService;
 import com.dw.demo.entities.Student;
+import com.dw.demo.rest.dto.BaseStudentDto;
+import com.dw.demo.rest.dto.HateoasStudentDto;
 
 /**
  * This class provides the "students" REST service. It supports the following HTTP methods:
@@ -56,6 +63,8 @@ public class StudentResource {
 	 */
 	private static final Logger logger = Logger.getLogger(className);
 
+	private static final String LINK_SELF = "self";
+
 	@EJB
 	IStudentService studentService;
 
@@ -70,16 +79,50 @@ public class StudentResource {
 	 */
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response create(@Context UriInfo uriInfo, Student student) {
+	public Response create(@Context UriInfo uriInfo, BaseStudentDto student) {
 		final String methodName = "create";
 		logger.entering(className, methodName);
 		try {
-			Student createdStudent = studentService.create(student);
-			URI uri = uriInfo.getBaseUriBuilder().path(StudentResource.class).path(createdStudent.getId()).build();
+			Student newStudent = createNewStudent(student);
+			URI uri = uriInfo.getBaseUriBuilder().path(StudentResource.class).path(newStudent.getId()).build();
 			return Response.created(uri).build();
 		} finally {
 			logger.exiting(className, methodName);
 		}
+	}
+
+	/**
+	 * Create a new student record from a submitted form using a bean parameter to aggregate the form parameters
+	 * 
+	 * @param uriInfo
+	 * @param student
+	 * @return
+	 */
+	@POST
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response createFromForm(@Context UriInfo uriInfo, @Valid @BeanParam BaseStudentDto student) {
+		final String methodName = "createFromForm";
+		logger.entering(className, methodName);
+		try {
+			Student newStudent = createNewStudent(student);
+			URI uri = uriInfo.getBaseUriBuilder().path(StudentResource.class).path(newStudent.getId()).build();
+			return Response.created(uri).build();
+		} finally {
+			logger.exiting(className, methodName);
+		}
+	}
+
+	/*
+	 * Helper for creating new student records
+	 */
+	private Student createNewStudent(BaseStudentDto student) {
+		Student newStudent = new Student();
+		newStudent.setEmail(student.getEmail());
+		newStudent.setFirstName(student.getFirstName());
+		newStudent.setLastName(student.getLastName());
+		newStudent.setGender(student.getGender());
+		newStudent = studentService.create(newStudent);
+		return newStudent;
 	}
 
 	/**
@@ -109,13 +152,21 @@ public class StudentResource {
 	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAll() {
+	public Response getAll(@Context UriInfo uriInfo) {
 		final String methodName = "getAll";
 		logger.entering(className, methodName);
 		try {
 			List<Student> students = studentService.get();
+			List<HateoasStudentDto> wrappedStudents = new ArrayList<HateoasStudentDto>();
+			for (Student student : students) {
+				HateoasStudentDto wrappedStudent = new HateoasStudentDto(student);
+				Link link = buildSelfLink(uriInfo, wrappedStudent);
+				wrappedStudent.addLink(link);
+				wrappedStudents.add(wrappedStudent);
+			}
+
 			// This preserves type information for the provider
-			GenericEntity<List<Student>> entity = new GenericEntity<List<Student>>(students) {
+			GenericEntity<List<HateoasStudentDto>> entity = new GenericEntity<List<HateoasStudentDto>>(wrappedStudents) {
 			};
 			return Response.ok(entity).build();
 		} finally {
@@ -133,19 +184,37 @@ public class StudentResource {
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getById(@PathParam("id") String id) {
+	public Response getById(@Context UriInfo uriInfo, @PathParam("id") String id) {
 		final String methodName = "getById";
 		logger.entering(className, methodName);
 		try {
 			Student student = studentService.findById(id);
 			if (student != null) {
-				return Response.ok(student).build();
+				HateoasStudentDto wrappedStudent = new HateoasStudentDto(student);
+				Link link = buildSelfLink(uriInfo, wrappedStudent);
+				wrappedStudent.addLink(link);
+				return Response.ok(wrappedStudent).build();
 			} else {
 				return Response.status(Status.NOT_FOUND).build();
 			}
 		} finally {
 			logger.exiting(className, methodName);
 		}
+	}
+
+	/**
+	 * Build a Link representing a HATEOAS 'self' relation.
+	 * 
+	 * @param uriInfo
+	 *            UriInfo
+	 * @param student
+	 *            the student record to generate the link for
+	 * @return a Link object
+	 */
+	private Link buildSelfLink(UriInfo uriInfo, HateoasStudentDto student) {
+		URI uri = uriInfo.getBaseUriBuilder().path(StudentResource.class).path(student.getId()).build();
+		Link link = Link.fromUri(uri).rel(LINK_SELF).type(MediaType.APPLICATION_JSON).build();
+		return link;
 	}
 
 	/**

@@ -165,10 +165,7 @@ public class StudentResource {
 				wrappedStudents.add(wrappedStudent);
 			}
 
-			// This preserves type information for the provider
-			GenericEntity<List<HateoasStudentDto>> entity = new GenericEntity<List<HateoasStudentDto>>(wrappedStudents) {
-			};
-			return Response.ok(entity).build();
+			return Response.ok(wrappedStudents).build();
 		} finally {
 			logger.exiting(className, methodName);
 		}

@@ -20,13 +20,13 @@ public class ValidationExceptionMapper implements ExceptionMapper<ValidationExce
 	@Override
 	public Response toResponse(ValidationException ex) {
 		if (ex instanceof ConstraintViolationException) {
-			return doHandleConstraintViolationException((ConstraintViolationException) ex);
+			return handleConstraintViolationException((ConstraintViolationException) ex);
 		}
 
 		return Response.status(Status.BAD_REQUEST).type(MediaType.TEXT_PLAIN).entity("bad: " + unwrapException(ex)).build();
 	}
 
-	private Response doHandleConstraintViolationException(ConstraintViolationException ex) {
+	private Response handleConstraintViolationException(ConstraintViolationException ex) {
 		StringBuilder sb = new StringBuilder();
 		for (ConstraintViolation<?> v : ex.getConstraintViolations()) {
 			String lastName = "";
@@ -40,18 +40,18 @@ public class ValidationExceptionMapper implements ExceptionMapper<ValidationExce
 
 	protected String unwrapException(Throwable t) {
 		StringBuffer sb = new StringBuffer();
-		doUnwrapException(sb, t);
+		unwrapException(sb, t);
 		return sb.toString();
 	}
 
-	private void doUnwrapException(StringBuffer sb, Throwable t) {
+	private void unwrapException(StringBuffer sb, Throwable t) {
 		if (t == null) {
 			return;
 		}
 		sb.append(t.getMessage());
 		if (t.getCause() != null && t != t.getCause()) {
 			sb.append('[');
-			doUnwrapException(sb, t.getCause());
+			unwrapException(sb, t.getCause());
 			sb.append(']');
 		}
 	}
